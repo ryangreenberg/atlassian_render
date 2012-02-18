@@ -46,7 +46,7 @@ class AtlassianRender < Redcarpet::Render::Base
   end
 
   def table_row(content)
-    "| #{content}\n"
+    "| #{content.strip}\n"
   end
 
   def table_cell(content, alignment)
