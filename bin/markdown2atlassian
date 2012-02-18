@@ -1,0 +1,54 @@
+#!/usr/bin/env ruby -wKU -rubygems
+
+require 'optparse'
+require 'redcarpet'
+require 'atlassian_render'
+
+def error_and_exit(msg)
+  $stderr.puts(msg)
+  exit(1)
+end
+
+def parse_options(args)
+  options = {}
+  optparse = OptionParser.new do|opts|
+    opts.banner = 'Usage: markdown2atlassian <file>  OR  cat <file> | markdown2atlassian'
+
+    # Tables
+    opts.on('-t', '--tables', 'Enable support for Markdown-formatted tables') do |t|
+      options[:tables] = true
+    end
+
+    opts.on( '-h', '--help', 'Display this screen' ) do
+      puts opts
+      exit
+    end
+  end
+  optparse.parse!(args)
+  
+  options[:file] = args.last
+  options
+end
+
+def main(args)
+  options = parse_options(args)
+
+  # Read input from (in order)
+  # - STDIN via pipe
+  # - file provided as args
+  input = if !STDIN.isatty
+    STDIN.read
+  elsif options[:file]
+    file = options[:file]
+    error_and_exit("Could not open #{file}") unless File.exist?(file)
+    File.read(file)
+  else
+    # show help screen and exit
+    parse_options(['-h'])
+  end
+
+  markdown = Redcarpet::Markdown.new(AtlassianRender)
+  puts markdown.render(input)
+end
+
+main(ARGV)
