@@ -25,7 +25,7 @@ class AtlassianRender < Redcarpet::Render::Base
   end
 
   def list(contents, list_type)
-    "#{contents}"
+    "#{contents}\n"
   end
 
   def list_item(text, list_type)
