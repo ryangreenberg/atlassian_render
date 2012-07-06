@@ -141,9 +141,9 @@ class TestAtlassianRender < MiniTest::Unit::TestCase
     markdown_input = 'Lorem ipsum **dolor** sit __amet__ consectetur.'
     expected_output = 'Lorem ipsum *dolor* sit *amet* consectetur.'
     actual_output = @markdown.render(markdown_input).strip
-    assert_equal actual_output, expected_output    
+    assert_equal actual_output, expected_output
   end
-  
+
   def test_italic
     markdown_input = 'Lorem ipsum _dolor_ sit *amet* consectetur.'
     expected_output = 'Lorem ipsum _dolor_ sit _amet_ consectetur.'
@@ -157,7 +157,7 @@ class TestAtlassianRender < MiniTest::Unit::TestCase
     actual_output = @markdown.render(markdown_input).strip
     assert_equal actual_output, expected_output
   end
-  
+
   def test_images
     markdown_input = 'Lorem ipsum ![dolor](http://sitamet.com) consectetur.'
     expected_output = 'Lorem ipsum !http://sitamet.com! consectetur.'
@@ -181,7 +181,7 @@ class TestAtlassianRender < MiniTest::Unit::TestCase
     actual_output = @markdown.render(markdown_input).strip
     assert_equal actual_output, expected_output
   end
-  
+
   def test_raw_html
     markdown_input = 'Lorem ipsum <span>foo</span> consectetur.'
     expected_output = 'Lorem ipsum <span>foo</span> consectetur.'
